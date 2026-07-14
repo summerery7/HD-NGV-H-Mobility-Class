@@ -1,11 +1,12 @@
 <mujoco model="mg400-solidworks_asm">
-
+  <!-- 관절 감쇠/armature 를 제거했으므로 안정성을 위해 물리 timestep 을 0.1ms 로 줄임 -->
   <option iterations="50" timestep="0.001" solver="PGS" gravity="0 0 -9.81" />
 
   <compiler angle="radian" meshdir="meshes" eulerseq="zyx" autolimits="true" />
 
   <default>
-
+    <!-- <joint limited="true" damping="0.01" armature="0.01" frictionloss="0.01" /> -->
+    <!-- 모터 회전자 관성(armature)/감쇠 제거: 링크 관성만 남겨 inverse dynamics 모델과 일치 -->
     <joint limited="true" />
 
     <geom condim="4" contype="1" conaffinity="15" friction="0.9 0.2 0.2" solref="0.001 2" />
@@ -48,7 +49,7 @@
       <geom type="mesh" rgba="1 1 1 1" mesh="base_link" contype="1" conaffinity="0" density="0" group="1" class="visualgeom" />
       <geom type="mesh" rgba="1 1 1 1" mesh="base_link" />
       <body name="MG400_Link_1" pos="0.005 0 0.1125">
-        <inertial pos="0.0046223 6.741e-05 0.067494" quat="0.388265 0.652383 -0.345683 0.551498" mass="1e-06" diaginertia="1e-09 1e-09 1e-09" />
+        <inertial pos="0.0046223 6.741e-05 0.067494" quat="0.388265 0.652383 -0.345683 0.551498" mass="1.7705" diaginertia="0.00744552 0.00610906 0.00570802" />
         <joint name="MG400_Joint_1" pos="0 0 0" axis="0 0 -1" range="-3.14 3.14"/>
         <geom type="mesh" rgba="1 1 1 1" mesh="MG400_Link_1" contype="1" conaffinity="0" density="0" group="1" class="visualgeom" />
         <geom type="mesh" rgba="1 1 1 1" mesh="MG400_Link_1" />
@@ -62,19 +63,19 @@
             <joint name="MG400_Joint_6" pos="0 0 0" axis="0 0 -1" range="-3.14 3.14"/>
             <geom type="mesh" rgba="1 1 1 1" mesh="MG400_Link_6" contype="1" conaffinity="0" density="0" group="1" class="visualgeom" />
             <geom type="mesh" rgba="1 1 1 1" mesh="MG400_Link_6" />
-
+            <!-- quat 보정: 원본 CAD 값은 힌지축이 1.0도 틀어져 손목 링크가 걸림(binding) -->
             <body name="MG400_Link_10" pos="0.175 0 0.0065686" quat="0 0 0 1">
               <inertial pos="-0.0387878 -0.00264953 0.0107465" quat="0.582376 0.373304 -0.608542 0.388792" mass="0.0628979" diaginertia="5.42418e-05 5.16813e-05 2.97735e-05" />
               <joint name="MG400_Joint_10" pos="0 0 0" axis="0 0 -1" range="-3.14 3.14"/>
               <geom type="mesh" rgba="1 1 1 1" mesh="MG400_Link_10" contype="1" conaffinity="0" density="0" group="1" class="visualgeom" />
               <geom type="mesh" rgba="1 1 1 1" mesh="MG400_Link_10" />
-
+              <!-- quat 보정: 원본 CAD 값(0.7133 -0.7009)은 90도에서 1도 틀어져 있음 -->
               <body name="MG400_Link_12" pos="-0.066 -0.039181 0.010024" quat="0.70710678 -0.70710678 0 0">
-                <inertial pos="4.183e-07 0 0.035031" quat="0.924006 -2.28296e-06 5.51672e-06 -0.382377" mass="1e-06" diaginertia="1e-09 1e-09 1e-09" />
+                <inertial pos="4.183e-07 0 0.035031" quat="0.924006 -2.28296e-06 5.51672e-06 -0.382377" mass="0.096528" diaginertia="4.9859e-05 4.9859e-05 2.1305e-05" />
                 <geom type="mesh" rgba="1 1 1 1" mesh="MG400_Link_12" contype="1" conaffinity="0" density="0" group="1" class="visualgeom" />
                 <geom type="mesh" rgba="1 1 1 1" mesh="MG400_Link_12" />
                 <body name="MG400_Gripper" pos="0.0 -0.0 -0.059" quat="0.1 -0.0 -0.0 0.0">
-                  <inertial pos="4.0931e-07 2.3808e-08 0.0" quat="0.500003 0.500003 -0.499997 0.499997" mass="1e-06" diaginertia="1e-09 1e-09 1e-09"/>
+                  <inertial pos="4.0931e-07 2.3808e-08 0.0" quat="0.500003 0.500003 -0.499997 0.499997" mass="0.025073" diaginertia="3.0059e-06 2.7676e-06 2.7676e-06"/>
                   <joint name="MG400_Joint_Gripper" pos="0 0 0" axis="1.1921e-05 0 1" range="-3.14 3.14"/>
                   <geom type="mesh" rgba="0.79216 0.81961 0.93333 1" mesh="MG400_Gripper" contype="1" conaffinity="0" density="0" group="1" class="visualgeom"/>
                   <geom type="mesh" rgba="0.79216 0.81961 0.93333 1" mesh="MG400_Gripper"/>
@@ -89,7 +90,7 @@
             <geom type="mesh" rgba="1 1 1 1" mesh="MG400_Link_6p" contype="1" conaffinity="0" density="0" group="1" class="visualgeom" />
             <geom type="mesh" rgba="1 1 1 1" mesh="MG400_Link_6p" />
             <body name="MG400_Link_9" pos="0.028925 -0.034472 -0.00625">
-              <inertial pos="0.087778 -0.006685 0.01625" quat="0.494881 0.494888 0.505078 0.50505" mass="1e-06" diaginertia="1e-09 1e-09 1e-09" />
+              <inertial pos="0.087778 -0.006685 0.01625" quat="0.494881 0.494888 0.505078 0.50505" mass="0.045357" diaginertia="0.00014181 0.00013205 2.00025e-05" />
               <joint name="MG400_Joint_9" pos="0 0 0" axis="0 0 -1" range="-3.14 3.14"/>
               <geom type="mesh" rgba="1 1 1 1" mesh="MG400_Link_9" contype="1" conaffinity="0" density="0" group="1" class="visualgeom" />
               <geom type="mesh" rgba="1 1 1 1" mesh="MG400_Link_9" />
@@ -102,20 +103,26 @@
           <geom type="mesh" rgba="1 1 1 1" mesh="MG400_Link_2" contype="1" conaffinity="0" density="0" group="1" class="visualgeom" />
           <geom type="mesh" rgba="1 1 1 1" mesh="MG400_Link_2" />
           <body name="MG400_Link_5" pos="-0.043 0 -0.0057251">
-            <inertial pos="0.0020358 -0.089342 -0.0025263" quat="0.499042 0.498242 -0.501587 0.501121" mass="1e-06" diaginertia="1e-09 1e-09 1e-09" />
+            <inertial pos="0.0020358 -0.089342 -0.0025263" quat="0.499042 0.498242 -0.501587 0.501121" mass="0.0092247" diaginertia="3.5875e-05 3.57811e-05 1.38909e-07" />
             <joint name="MG400_Joint_5" pos="0 0 0" axis="0 0 -1" range="-3.14 3.14"/>
             <geom type="mesh" rgba="1 1 1 1" mesh="MG400_Link_5" contype="1" conaffinity="0" density="0" group="1" class="visualgeom" />
             <geom type="mesh" rgba="1 1 1 1" mesh="MG400_Link_5" />
           </body>
         </body>
-
+        <!-- quat 보정: 원본 CAD 값(0.4934 0.5065 ...)은 힌지축이 1.5도 틀어져 평행링크가 걸림(binding) -->
         <body name="MG400_Link_4" pos="-0.0045289 0.020738 0.138" quat="0.5 0.5 -0.5 0.5">
-          <inertial pos="0.073752 -0.020205 0.020216" quat="0.495341 0.508486 0.491467 0.504519" mass="1e-06" diaginertia="1e-09 1e-09 1e-09" />
+          <inertial pos="0.073752 -0.020205 0.020216" quat="0.495341 0.508486 0.491467 0.504519" mass="0.066255" diaginertia="0.000219004 0.000200507 3.73968e-05" />
           <joint name="MG400_Joint_4" pos="0 0 0" axis="0 0 -1" range="-3.14 3.14"/>
           <geom type="mesh" rgba="1 1 1 1" mesh="MG400_Link_4" contype="1" conaffinity="0" density="0" group="1" class="visualgeom" />
           <geom type="mesh" rgba="1 1 1 1" mesh="MG400_Link_4" />
         </body>
       </body>
+    </body>
+
+    <body name="box" pos="0.15 0.09 0.03">
+        <geom type="box" size="0.02 0.02 0.02" rgba="1 0 0 1" mass="0.1" contype="2" conaffinity="2" friction="0 0 0"/> 
+        <joint name="box_joint" type="free" damping="0.1" />
+        <site name="box_site" type="box" size="0.02 0.02 0.02" rgba="1 0 0 1" />
     </body>
 
   </worldbody>
@@ -136,15 +143,16 @@
     <motor name="M0G400_Joint_Gripper" joint="MG400_Joint_Gripper"
            ctrllimited="true" ctrlrange="-100 100"
            forcelimited="true" forcerange="-100 100"/>
+    <velocity name="box_vel" joint="box_joint" gear="1 0 0 0 0 0" ctrlrange="-1 1" />
 
   </actuator>
 
   <equality>
-
+    <!-- 앵커를 상대 링크의 실제 평면(축방향 오프셋)에 맞게 보정 -->
     <connect body1="MG400_Link_5" body2="MG400_Link_6" anchor="0 -0.175 0.002"/>
     <connect body1="MG400_Link_4" body2="MG400_Link_6p" anchor="0.175 0 0.0092749"/>
     <connect body1="MG400_Link_9" body2="MG400_Link_10" anchor="0.175 0 0.0065686"/>
-
+    <weld name="gripper_weld" body1="MG400_Gripper" body2="box" active="false"/>
   </equality>
 
   <contact>
@@ -202,6 +210,7 @@
 
       <exclude body1="MG400_Link_6p" body2="MG400_Link_9"/>
 
+      <!-- Gripper 는 손목 링크들과 메쉬가 가까워 자기접촉이 생기므로 제외 -->
       <exclude body1="MG400_Gripper" body2="MG400_Link_6"/>
       <exclude body1="MG400_Gripper" body2="MG400_Link_6p"/>
       <exclude body1="MG400_Gripper" body2="MG400_Link_9"/>
