@@ -18,7 +18,7 @@ MG400 로봇 + MuJoCo + ROS2 + 비전 5일 과정 실습 코드.
 
 ## day_2
 
-`1.Forward_Kinematics` ~ `8.xml`, `10.Sympy_example` 순서로 진행.
+`1.Forward_Kinematics` ~ `8.xml`, `9.Sympy_example` 순서로 진행.
 각 스크립트는 폴더 구조 그대로 실행 (`8.xml`의 모델과 `7.utils`를 상대경로로 참조).
 
 ## day_3
