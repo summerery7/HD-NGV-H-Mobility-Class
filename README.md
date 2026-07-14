@@ -10,6 +10,31 @@ MG400 로봇 + MuJoCo + ROS2 + 비전 5일 과정 실습 코드.
 | day_4 | 카메라 캘리브레이션, 로봇-아이 캘리브레이션, 3D Localization, YOLO 3D 좌표 | `day_4/` |
 | day_5 | Visual Servoing (IBVS/PBVS) + 통합 프로젝트 패키지 틀 (`final_project`) | `day_5/` |
 
+## 환경 설정
+
+권장 환경: **Ubuntu 22.04 + ROS 2 Humble + Python 3.10**
+
+### 1. 파이썬 라이브러리 설치
+
+```bash
+pip install -r requirements.txt
+```
+
+day_1 ~ day_5 실습에 필요한 패키지(mujoco, opencv-python, torch, open3d, PyQt5, pyrealsense2 등)가 모두 설치된다.
+
+- **GPU(CUDA)로 YOLO 추론 시**: [pytorch.org](https://pytorch.org/get-started/locally/) 안내에 따라 CUDA 버전에 맞는 `torch`/`torchvision`을 먼저 설치한 뒤 `pip install -r requirements.txt` 실행.
+- YOLO는 `torch.hub.load("ultralytics/yolov5", ...)` 방식이라 최초 실행 시 인터넷 연결이 필요하다.
+
+### 2. ROS 2 (day_1, day_3, day_5)
+
+`rclpy`, `turtlesim` 등 ROS 관련 모듈은 pip 이 아니라 ROS 2 Humble 설치 시 함께 제공된다.
+
+```bash
+sudo apt install ros-humble-desktop ros-humble-turtlesim python3-tk
+```
+
+`dobot_msgs` 는 교육용 커스텀 메시지 패키지로, 워크스페이스에서 `colcon build` 로 빌드한다.
+
 ## day_1
 
 - `ros_tutorial/` — turtlesim 실습 코드 (학생들이 직접 ROS2 패키지로 구성)
@@ -18,7 +43,7 @@ MG400 로봇 + MuJoCo + ROS2 + 비전 5일 과정 실습 코드.
 
 ## day_2
 
-`1.Forward_Kinematics` ~ `8.xml`, `9.Sympy_example` 순서로 진행.
+`1.Forward_Kinematics` ~ `9.Sympy_example` 순서로 진행.
 각 스크립트는 폴더 구조 그대로 실행 (`8.xml`의 모델과 `7.utils`를 상대경로로 참조).
 
 ## day_3
