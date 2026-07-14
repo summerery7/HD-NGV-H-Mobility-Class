@@ -1,0 +1,59 @@
+# =========================================================
+# 현대 NGV H-모빌리티 클래스 심화교육 (day_1 ~ day_5)
+# Python 3.10 권장 (Ubuntu 22.04 / ROS 2 Humble 기준)
+#
+# 설치:  pip install -r requirements.txt
+# =========================================================
+
+# --- 공통 수치 연산 ---
+# (open3d / yolov5 호환을 위해 numpy 2.x 대신 1.x 사용)
+numpy>=1.23,<2.0
+scipy>=1.10          # day_4: robot_eye_calibration (scipy.spatial.transform)
+sympy>=1.11          # day_2: 9.Sympy_example (기호 미분 FK/IK/Jacobian)
+
+# --- 시뮬레이션 (day_1, day_2, day_3, day_4, day_5) ---
+mujoco>=3.1          # MuJoCo 물리 시뮬레이터 + mujoco.viewer
+
+# --- 영상 처리 / 시각화 ---
+opencv-python>=4.8   # day_3~day_5: cv2 (aruco, calibration 포함)
+matplotlib>=3.7      # day_2, day_3, day_5: 그래프/플롯
+imageio[ffmpeg]>=2.31  # day_2: video_logger.py (libx264 mp4 저장)
+open3d>=0.17         # day_4: 3.3d_localization (포인트클라우드 정합)
+
+# --- GUI (day_4: 1.camera_calibration) ---
+PyQt5>=5.15
+
+# --- 딥러닝 / YOLOv5 (day_3: yolo, day_4: 4.yolo_locate) ---
+# torch.hub.load("ultralytics/yolov5", ...) 방식으로 로드하므로
+# yolov5 저장소가 요구하는 부속 패키지도 함께 설치합니다.
+# GPU(CUDA) 사용 시에는 https://pytorch.org 안내에 따라
+# CUDA 버전에 맞는 torch/torchvision을 별도 설치하세요.
+torch>=2.0
+torchvision>=0.15
+ultralytics>=8.0     # yolov5 hub 코드가 내부적으로 사용
+pandas>=1.5          # yolov5 results.pandas() 등에서 필요
+PyYAML>=6.0
+tqdm>=4.64
+requests>=2.28
+seaborn>=0.12        # yolov5 플로팅 유틸에서 필요
+
+# --- RealSense 카메라 (day_4: 4.yolo_locate 등, 실물 카메라 필요) ---
+pyrealsense2>=2.54
+
+# --- 빌드 도구 (day_1/day_3/day_5 ROS 2 패키지 setup.py) ---
+setuptools
+
+# =========================================================
+# [주의] 아래 모듈은 pip 로 설치하지 않습니다.
+#
+# * ROS 2 관련 (rclpy, std_msgs, sensor_msgs, geometry_msgs,
+#   turtlesim, ament_index_python, dobot_msgs):
+#   - Ubuntu 22.04 + ROS 2 Humble 설치 시 함께 제공됩니다.
+#     sudo apt install ros-humble-desktop ros-humble-turtlesim
+#   - dobot_msgs 는 워크스페이스에서 colcon build 로 빌드하는
+#     교육용 커스텀 메시지 패키지입니다.
+#
+# * tkinter (day_3: dobot_api.py):
+#   - 파이썬 표준 라이브러리입니다. Ubuntu 에서 없을 경우:
+#     sudo apt install python3-tk
+# =========================================================
